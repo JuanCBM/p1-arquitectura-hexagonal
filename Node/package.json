@@ -1,0 +1,26 @@
+{
+  "name": "hexagonal-architecture-node",
+  "version": "0.0.1",
+  "description": "Hexagonal architecture in nodeJS",
+  "main": "./src/server.js",
+  "scripts": {
+    "develop": "nodemon ./src/server.js",
+    "start": "node ./src/server.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JuanCBM/p1-arquitectura-hexagonal/Node"
+  },
+  "keywords": [
+    "nodejs",
+    "hexagonal-architecture",
+    "clean-architecture"
+  ],
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7",
+    "mongoose": "4.11.13"
+  }
+}
