@@ -12,5 +12,7 @@ public interface ShoppingCartUseCase {
 
   void deleteShoppingCartById(long id);
 
-  FullShoppingCartDTO updateShoppingCart(ShoppingCartDTO toShoppingCartDTO);
+  FullShoppingCartDTO endShoppingCart(long id);
+
+  FullShoppingCartDTO addProduct(long idShoppingCart, long idProduct);
 }

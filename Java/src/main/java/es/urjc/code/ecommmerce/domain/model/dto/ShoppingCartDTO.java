@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 public class ShoppingCartDTO {
 
   Long id;
-  boolean validated;
   boolean completed;
   String ownerName;
 

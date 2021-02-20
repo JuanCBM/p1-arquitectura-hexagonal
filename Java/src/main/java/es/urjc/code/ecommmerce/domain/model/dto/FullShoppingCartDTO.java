@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 public class FullShoppingCartDTO {
 
   Long id;
-  boolean validated;
   boolean completed;
   String ownerName;
   List<FullProductDTO> products = new ArrayList<>();

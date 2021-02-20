@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = ShoppingCartEntity.TABLE_NAME)
 public class ShoppingCartEntity {
+
+  public static final String TABLE_NAME = "shopping_cart";
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,7 +30,7 @@ public class ShoppingCartEntity {
   boolean completed;
   String ownerName;
 
-  @OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<ProductShoppingCartEntity> products = new ArrayList<>();
-  
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<ProductEntity> products = new ArrayList<>();
+
 }

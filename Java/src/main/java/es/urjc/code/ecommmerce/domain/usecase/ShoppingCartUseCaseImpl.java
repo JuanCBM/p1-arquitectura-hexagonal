@@ -33,12 +33,18 @@ public class ShoppingCartUseCaseImpl implements ShoppingCartUseCase {
   }
 
   @Override
-  public FullShoppingCartDTO updateShoppingCart(ShoppingCartDTO shoppingCartDTO) {
+  public FullShoppingCartDTO endShoppingCart(long id) {
     Optional<FullShoppingCartDTO> fullShoppingCartDTO = this.shoppingCartRepository
-        .findShoppingCartById(shoppingCartDTO.getId());
-    fullShoppingCartDTO.get().setCompleted(shoppingCartDTO.isCompleted());
+        .findShoppingCartById(id);
+
+    fullShoppingCartDTO.get().setCompleted(Boolean.TRUE);
 
     return this.shoppingCartRepository.save(fullShoppingCartDTO.get());
+  }
+
+  @Override
+  public FullShoppingCartDTO addProduct(long idShoppingCart, long idProduct) {
+    return this.shoppingCartRepository.addProduct(idShoppingCart, idProduct);
   }
 
   private FullShoppingCartDTO toFullShoppingCartDTO(ShoppingCartDTO shoppingCartDTO) {

@@ -10,4 +10,6 @@ public interface ShoppingCartRepository {
   Optional<FullShoppingCartDTO> findShoppingCartById(long id);
 
   void deleteShoppingCartById(long id);
+
+  FullShoppingCartDTO addProduct(long idShoppingCart, long idProduct);
 }

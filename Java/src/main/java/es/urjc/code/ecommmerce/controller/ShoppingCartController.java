@@ -5,10 +5,8 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 
 import es.urjc.code.ecommmerce.controller.dto.ShoppingCartRequestDTO;
 import es.urjc.code.ecommmerce.controller.dto.ShoppingCartResponseDTO;
-import es.urjc.code.ecommmerce.controller.dto.ShoppingCartUpdateRequestDTO;
 import es.urjc.code.ecommmerce.service.ShoppingCartService;
 import java.net.URI;
-import java.util.NoSuchElementException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -46,28 +44,30 @@ public class ShoppingCartController {
   }
 
   @GetMapping("/{id}")
-  public ShoppingCartResponseDTO getShoppingCart(@PathVariable long id) {
-    return this.shoppingCartService.findById(id)
+  public ResponseEntity<ShoppingCartResponseDTO> getShoppingCart(@PathVariable long id) {
+    return ResponseEntity.ok().body(this.shoppingCartService.findById(id)
         .map(ShoppingCartResponseDTO::fromFullShoppingCartDTO)
-        .orElseThrow();
+        .orElseThrow());
   }
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteShoppingCart(@PathVariable long id) {
-    this.shoppingCartService.findById(id).orElseThrow(NoSuchElementException::new);
     this.shoppingCartService.deleteById(id);
-
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
   }
 
   @PatchMapping("/{id}")
-  public ShoppingCartResponseDTO updateShoppingCart(@PathVariable long id,
-      @RequestBody ShoppingCartUpdateRequestDTO shoppingCartUpdateRequestDTO) {
-    shoppingCartUpdateRequestDTO.setId(id);
-    this.shoppingCartService.findById(id).orElseThrow(NoSuchElementException::new);
+  public ResponseEntity<ShoppingCartResponseDTO> updateShoppingCart(@PathVariable long id) {
+    return ResponseEntity.ok()
+        .body(fromFullShoppingCartDTO(this.shoppingCartService.endShoppingCart(id)));
+  }
 
-    return fromFullShoppingCartDTO(this.shoppingCartService.update(shoppingCartUpdateRequestDTO));
+  @PostMapping("/{idShoppingCart}/product/{idProduct}")
+  public ResponseEntity<ShoppingCartResponseDTO> addProductToShoppingCart(
+      @PathVariable long idShoppingCart,
+      @PathVariable long idProduct) {
+    return ResponseEntity.ok().body(
+        fromFullShoppingCartDTO(this.shoppingCartService.addProduct(idShoppingCart, idProduct)));
   }
 
 }

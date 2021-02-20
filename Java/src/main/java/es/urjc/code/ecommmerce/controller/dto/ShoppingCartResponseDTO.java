@@ -16,7 +16,6 @@ public class ShoppingCartResponseDTO {
   private static final ModelMapper modelMapper = new ModelMapper();
 
   Long id;
-  boolean validated;
   boolean completed;
   String ownerName;
   List<ProductResponseDTO> products = new ArrayList<>();

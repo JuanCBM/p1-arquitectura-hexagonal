@@ -44,18 +44,19 @@ public class ProductController {
   }
 
   @GetMapping({"/", ""})
-  public Collection<ProductResponseDTO> getProducts() {
-    return this.productService
+  public ResponseEntity<Collection<ProductResponseDTO>> getProducts() {
+    return ResponseEntity.ok().body(this.productService
         .findAll()
         .stream()
         .map(ProductResponseDTO::fromFullProductDTO)
-        .collect(Collectors.toList());
+        .collect(Collectors.toList()));
   }
 
   @GetMapping("/{id}")
-  public ProductResponseDTO getProduct(@PathVariable long id) {
-    return this.productService.findById(id).map(ProductResponseDTO::fromFullProductDTO)
-        .orElseThrow();
+  public ResponseEntity<ProductResponseDTO> getProduct(@PathVariable long id) {
+    return ResponseEntity.ok()
+        .body(this.productService.findById(id).map(ProductResponseDTO::fromFullProductDTO)
+            .orElseThrow());
   }
 
   @DeleteMapping("/{id}")
