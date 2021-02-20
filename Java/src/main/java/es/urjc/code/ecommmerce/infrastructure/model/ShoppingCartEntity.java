@@ -32,7 +32,7 @@ public class ShoppingCartEntity {
   boolean completed;
   String ownerName;
 
-  @ManyToMany(cascade = {CascadeType.ALL})
+  @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   @JoinTable(name = "shopping_cart_product",
       joinColumns = @JoinColumn(name = "shopping_cart_id"),
       inverseJoinColumns = @JoinColumn(name = "product_id"))
