@@ -19,8 +19,7 @@ public class ProductUseCaseImpl implements ProductUseCase {
 
   @Override
   public FullProductDTO createProduct(ProductDTO productDTO) {
-    FullProductDTO fullProductDTO = this.toFullProductDTO(productDTO);
-    return this.productRepository.save(fullProductDTO);
+    return this.productRepository.save(this.toFullProductDTO(productDTO));
   }
 
   @Override

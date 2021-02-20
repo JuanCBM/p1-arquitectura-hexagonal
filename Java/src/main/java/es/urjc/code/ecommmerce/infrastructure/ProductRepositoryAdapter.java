@@ -25,8 +25,7 @@ public class ProductRepositoryAdapter implements ProductRepository {
 
   @Override
   public FullProductDTO save(final FullProductDTO fullProductDTO) {
-    ProductEntity productEntity = this.toProductEntity(fullProductDTO);
-    return toFullProductDTO(this.productJpaRepository.save(productEntity));
+    return toFullProductDTO(this.productJpaRepository.save(this.toProductEntity(fullProductDTO)));
   }
 
   @Override
