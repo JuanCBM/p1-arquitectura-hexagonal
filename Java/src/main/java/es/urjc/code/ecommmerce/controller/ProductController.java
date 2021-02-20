@@ -5,10 +5,10 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 
 import es.urjc.code.ecommmerce.controller.dto.ProductRequestDTO;
 import es.urjc.code.ecommmerce.controller.dto.ProductResponseDTO;
+import es.urjc.code.ecommmerce.controller.exception.ProductNotFoundException;
 import es.urjc.code.ecommmerce.service.ProductService;
 import java.net.URI;
 import java.util.Collection;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,12 +56,12 @@ public class ProductController {
   public ResponseEntity<ProductResponseDTO> getProduct(@PathVariable long id) {
     return ResponseEntity.ok()
         .body(this.productService.findById(id).map(ProductResponseDTO::fromFullProductDTO)
-            .orElseThrow());
+            .orElseThrow(ProductNotFoundException::new));
   }
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteProduct(@PathVariable long id) {
-    this.productService.findById(id).orElseThrow(NoSuchElementException::new);
+    this.productService.findById(id).orElseThrow(ProductNotFoundException::new);
     this.productService.deleteById(id);
 
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);

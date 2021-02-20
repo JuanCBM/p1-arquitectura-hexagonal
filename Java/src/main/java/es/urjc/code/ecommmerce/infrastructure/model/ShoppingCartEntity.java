@@ -7,7 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,7 +32,10 @@ public class ShoppingCartEntity {
   boolean completed;
   String ownerName;
 
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+  @ManyToMany(cascade = {CascadeType.ALL})
+  @JoinTable(name = "shopping_cart_product",
+      joinColumns = @JoinColumn(name = "shopping_cart_id"),
+      inverseJoinColumns = @JoinColumn(name = "product_id"))
   private List<ProductEntity> products = new ArrayList<>();
 
 }
