@@ -23,8 +23,7 @@ public class ShoppingCartUseCaseImpl implements ShoppingCartUseCase {
 
   @Override
   public FullShoppingCartDTO createShoppingCart(ShoppingCartDTO shoppingCartDTO) {
-    FullShoppingCartDTO fullShoppingCartDTO = this.toFullShoppingCartDTO(shoppingCartDTO);
-    return this.shoppingCartRepository.save(fullShoppingCartDTO);
+    return this.shoppingCartRepository.save(this.toFullShoppingCartDTO(shoppingCartDTO));
   }
 
   @Override

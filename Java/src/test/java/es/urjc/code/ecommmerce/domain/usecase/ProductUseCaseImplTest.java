@@ -58,7 +58,8 @@ class ProductUseCaseImplTest {
     productDTO.setDescription(description);
     productDTO.setName(name);
 
-    when(this.productRepository.save(Mockito.any())).thenReturn(this.createFullProductDTO(1));
+    when(this.productRepository.save(Mockito.any())).thenReturn(this.createFullProductDTO(1, name,
+        description));
     FullProductDTO createdProduct = this.productUseCase.createProduct(productDTO);
 
     assertNotNull(createdProduct.getId());
@@ -70,13 +71,13 @@ class ProductUseCaseImplTest {
   @Test
   void givenIdOfExistingProductWhenFindByIdThenOK() {
     when(this.productRepository.findProductById(Mockito.anyLong()))
-        .thenReturn(Optional.of(this.createFullProductDTO(1)));
+        .thenReturn(Optional.of(this.createFullProductDTO(1, name, description)));
 
     Optional<FullProductDTO> fullProductDTO = this.productUseCase.findProductById(id);
 
     assertTrue(fullProductDTO.isPresent());
-    assertEquals(fullProductDTO.get().getDescription(), fullProductDTO.get().getDescription());
-    assertEquals(fullProductDTO.get().getName(), fullProductDTO.get().getName());
+    assertEquals(fullProductDTO.get().getDescription(), description);
+    assertEquals(fullProductDTO.get().getName(), name);
     assertEquals(fullProductDTO.get().getId(), id);
   }
 
@@ -97,7 +98,7 @@ class ProductUseCaseImplTest {
     verify(this.productRepository).deleteProductById(id);
   }
 
-  private FullProductDTO createFullProductDTO(long id) {
+  private FullProductDTO createFullProductDTO(long id, String name, String description) {
     FullProductDTO fullProductDTO = new FullProductDTO();
     fullProductDTO.setName(name);
     fullProductDTO.setDescription(description);
@@ -109,7 +110,7 @@ class ProductUseCaseImplTest {
   private List<FullProductDTO> createFullProductsDTO(long elements) {
     List<FullProductDTO> fullProductDTOs = new ArrayList<>();
     for (int i = 0; i < elements; i++) {
-      fullProductDTOs.add(this.createFullProductDTO(i));
+      fullProductDTOs.add(this.createFullProductDTO(i, name, description));
     }
     return fullProductDTOs;
   }
