@@ -1,6 +1,7 @@
 package es.urjc.code.ecommmerce.domain.usecase;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doNothing;
@@ -31,7 +32,7 @@ class ProductUseCaseImplTest {
   @InjectMocks
   ProductUseCaseImpl productUseCase;
 
-  private static final String descripcion = "Monitor 27 pulgadas LG";
+  private static final String description = "Monitor 27 pulgadas LG";
   private static final String name = "Monitor ";
   private static final long id = 1;
 
@@ -54,11 +55,10 @@ class ProductUseCaseImplTest {
   @Test
   void givenProductDTOWhenCreateProductThenOK() {
     ProductDTO productDTO = new ProductDTO();
-    productDTO.setDescription(descripcion);
+    productDTO.setDescription(description);
     productDTO.setName(name);
 
     when(this.productRepository.save(Mockito.any())).thenReturn(this.createFullProductDTO(1));
-
     FullProductDTO createdProduct = this.productUseCase.createProduct(productDTO);
 
     assertNotNull(createdProduct.getId());
@@ -87,12 +87,8 @@ class ProductUseCaseImplTest {
 
     Optional<FullProductDTO> fullProductDTO = this.productUseCase.findProductById(id);
 
-    this.assertFalse(fullProductDTO.isPresent());
+    assertFalse(fullProductDTO.isPresent());
   }
-
-  private void assertFalse(boolean present) {
-  }
-
 
   @Test
   void deleteProductById() {
@@ -104,7 +100,7 @@ class ProductUseCaseImplTest {
   private FullProductDTO createFullProductDTO(long id) {
     FullProductDTO fullProductDTO = new FullProductDTO();
     fullProductDTO.setName(name);
-    fullProductDTO.setDescription(descripcion);
+    fullProductDTO.setDescription(description);
     fullProductDTO.setId(id);
 
     return fullProductDTO;
