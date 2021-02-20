@@ -18,7 +18,7 @@ public class ShoppingCartResponseDTO {
   Long id;
   boolean completed;
   String ownerName;
-  List<ProductResponseDTO> products = new ArrayList<>();
+  List<ShoppingCartProductDTO> products = new ArrayList<>();
 
   public static ShoppingCartResponseDTO fromFullShoppingCartDTO(
       FullShoppingCartDTO fullShoppingCartDTO) {

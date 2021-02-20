@@ -1,7 +1,5 @@
 package es.urjc.code.ecommmerce.domain.model.dto;
 
-import java.util.ArrayList;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,11 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FullShoppingCartDTO {
+public class ShoppingCartProductDTO {
 
   Long id;
-  boolean completed;
-  String ownerName;
-  List<ShoppingCartProductDTO> products = new ArrayList<>();
+  Long quantity;
 
 }

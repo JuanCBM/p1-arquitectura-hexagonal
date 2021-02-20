@@ -4,23 +4,30 @@ import es.urjc.code.ecommmerce.domain.model.dto.FullShoppingCartDTO;
 import es.urjc.code.ecommmerce.domain.repository.ShoppingCartRepository;
 import es.urjc.code.ecommmerce.infrastructure.model.ProductEntity;
 import es.urjc.code.ecommmerce.infrastructure.model.ShoppingCartEntity;
+import es.urjc.code.ecommmerce.infrastructure.model.ShoppingCartProductEntity;
 import es.urjc.code.ecommmerce.infrastructure.repository.ProductJpaRepository;
 import es.urjc.code.ecommmerce.infrastructure.repository.ShoppingCartJpaRepository;
+import es.urjc.code.ecommmerce.infrastructure.repository.ShoppingCartProductJpaRepository;
 import java.util.Optional;
+import javax.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 @Component
+@Transactional
 public class ShoppingCartRespositoryAdapter implements ShoppingCartRepository {
 
   private static final ModelMapper modelMapper = new ModelMapper();
   private final ShoppingCartJpaRepository shoppingCartJpaRepository;
   private final ProductJpaRepository productJpaRepository;
+  private final ShoppingCartProductJpaRepository shoppingCartProductJpaRepository;
 
   public ShoppingCartRespositoryAdapter(final ShoppingCartJpaRepository shoppingCartJpaRepository,
-      ProductJpaRepository productJpaRepository) {
+      ProductJpaRepository productJpaRepository,
+      ShoppingCartProductJpaRepository shoppingCartProductJpaRepository) {
     this.shoppingCartJpaRepository = shoppingCartJpaRepository;
     this.productJpaRepository = productJpaRepository;
+    this.shoppingCartProductJpaRepository = shoppingCartProductJpaRepository;
   }
 
   @Override
@@ -41,13 +48,41 @@ public class ShoppingCartRespositoryAdapter implements ShoppingCartRepository {
   }
 
   @Override
-  public FullShoppingCartDTO addProduct(long idShoppingCart, long idProduct) {
+  public FullShoppingCartDTO addProduct(long idShoppingCart, long idProduct, long quantity) {
     ShoppingCartEntity shoppingCart = this.shoppingCartJpaRepository.findById(idShoppingCart).get();
-    ProductEntity product = this.productJpaRepository.findById(idProduct).get();
-    shoppingCart.getProducts().add(product);
+    ProductEntity productEntity = this.productJpaRepository.findById(idProduct).get();
 
-    return toFullShoppingCartDTO(this.shoppingCartJpaRepository.save(shoppingCart));
+    ShoppingCartProductEntity shoppingCartProductEntity = shoppingCart.getProducts().stream()
+        .filter(shoppingCartProduct -> shoppingCartProduct.getProduct().getId().equals(idProduct))
+        .findFirst().orElse(null);
 
+    if (shoppingCartProductEntity != null) {
+      shoppingCartProductEntity.setQuantity(shoppingCartProductEntity.getQuantity() + quantity);
+    } else {
+      shoppingCartProductEntity = new ShoppingCartProductEntity(shoppingCart, productEntity,
+          quantity);
+      shoppingCart.getProducts().add(shoppingCartProductEntity);
+    }
+
+    this.shoppingCartProductJpaRepository.save(shoppingCartProductEntity);
+
+    return toFullShoppingCartDTO(shoppingCart);
+
+  }
+
+  @Override
+  public Optional<FullShoppingCartDTO> deleteProduct(long idShoppingCart, long idProduct) {
+    Optional<ShoppingCartEntity> shoppingCart = this.shoppingCartJpaRepository
+        .findById(idShoppingCart);
+    ShoppingCartProductEntity shoppingCartProductEntity = shoppingCart.get().getProducts().stream()
+        .filter(shoppingCartProduct -> shoppingCartProduct.getProduct().getId().equals(idProduct))
+        .findFirst().orElse(null);
+
+    shoppingCart.get().getProducts().remove(shoppingCartProductEntity);
+
+    this.shoppingCartProductJpaRepository.delete(shoppingCartProductEntity);
+
+    return shoppingCart.map(ShoppingCartRespositoryAdapter::toFullShoppingCartDTO);
   }
 
   private ShoppingCartEntity toShoppingCartEntity(final FullShoppingCartDTO fullShoppingCartDTO) {
@@ -57,5 +92,6 @@ public class ShoppingCartRespositoryAdapter implements ShoppingCartRepository {
   private static FullShoppingCartDTO toFullShoppingCartDTO(final ShoppingCartEntity productEntity) {
     return modelMapper.map(productEntity, FullShoppingCartDTO.class);
   }
+
 
 }

@@ -7,11 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -20,6 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = ShoppingCartEntity.TABLE_NAME)
+@Builder
 public class ShoppingCartEntity {
 
   public static final String TABLE_NAME = "shopping_cart";
@@ -28,14 +28,9 @@ public class ShoppingCartEntity {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
-  boolean validated;
   boolean completed;
   String ownerName;
 
-  @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-  @JoinTable(name = "shopping_cart_product",
-      joinColumns = @JoinColumn(name = "shopping_cart_id"),
-      inverseJoinColumns = @JoinColumn(name = "product_id"))
-  private List<ProductEntity> products = new ArrayList<>();
-
+  @OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.MERGE, orphanRemoval = true)
+  private List<ShoppingCartProductEntity> products = new ArrayList<>();
 }

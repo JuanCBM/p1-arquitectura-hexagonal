@@ -1,8 +1,10 @@
 package es.urjc.code.ecommmerce.domain.usecase;
 
+import es.urjc.code.ecommmerce.domain.exceptions.ProductNotAvailableException;
 import es.urjc.code.ecommmerce.domain.model.dto.FullShoppingCartDTO;
 import es.urjc.code.ecommmerce.domain.model.dto.ShoppingCartDTO;
 import es.urjc.code.ecommmerce.domain.repository.ShoppingCartRepository;
+import es.urjc.code.ecommmerce.service.ShoppingCartValidationService;
 import java.util.Optional;
 import org.modelmapper.ModelMapper;
 
@@ -10,10 +12,13 @@ public class ShoppingCartUseCaseImpl implements ShoppingCartUseCase {
 
   private final ShoppingCartRepository shoppingCartRepository;
   private final ModelMapper modelMapper;
+  private final ShoppingCartValidationService shoppingCartValidationService;
 
-  public ShoppingCartUseCaseImpl(ShoppingCartRepository shoppingCartRepository) {
+  public ShoppingCartUseCaseImpl(ShoppingCartRepository shoppingCartRepository,
+      ShoppingCartValidationService shoppingCartValidationService) {
     this.shoppingCartRepository = shoppingCartRepository;
     this.modelMapper = new ModelMapper();
+    this.shoppingCartValidationService = shoppingCartValidationService;
   }
 
   @Override
@@ -33,18 +38,28 @@ public class ShoppingCartUseCaseImpl implements ShoppingCartUseCase {
   }
 
   @Override
-  public FullShoppingCartDTO endShoppingCart(long id) {
+  public FullShoppingCartDTO endShoppingCart(long id) throws ProductNotAvailableException {
     Optional<FullShoppingCartDTO> fullShoppingCartDTO = this.shoppingCartRepository
         .findShoppingCartById(id);
 
-    fullShoppingCartDTO.get().setCompleted(Boolean.TRUE);
+    if (this.shoppingCartValidationService
+        .validateShoppingCart(fullShoppingCartDTO.get().getProducts())) {
+      fullShoppingCartDTO.get().setCompleted(Boolean.TRUE);
+    } else {
+      throw new ProductNotAvailableException();
+    }
 
     return this.shoppingCartRepository.save(fullShoppingCartDTO.get());
   }
 
   @Override
-  public FullShoppingCartDTO addProduct(long idShoppingCart, long idProduct) {
-    return this.shoppingCartRepository.addProduct(idShoppingCart, idProduct);
+  public FullShoppingCartDTO addProduct(long idShoppingCart, long idProduct, long quantity) {
+    return this.shoppingCartRepository.addProduct(idShoppingCart, idProduct, quantity);
+  }
+
+  @Override
+  public Optional<FullShoppingCartDTO> deleteProduct(long idShoppingCart, long idProduct) {
+    return this.shoppingCartRepository.deleteProduct(idShoppingCart, idProduct);
   }
 
   private FullShoppingCartDTO toFullShoppingCartDTO(ShoppingCartDTO shoppingCartDTO) {

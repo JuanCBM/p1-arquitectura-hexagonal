@@ -62,12 +62,23 @@ public class ShoppingCartController {
         .body(fromFullShoppingCartDTO(this.shoppingCartService.endShoppingCart(id)));
   }
 
-  @PostMapping("/{idShoppingCart}/product/{idProduct}")
+  @PostMapping("/{idShoppingCart}/product/{idProduct}/quantity/{quantity}")
   public ResponseEntity<ShoppingCartResponseDTO> addProductToShoppingCart(
+      @PathVariable long idShoppingCart,
+      @PathVariable long idProduct,
+      @PathVariable long quantity) {
+    return ResponseEntity.ok().body(
+        fromFullShoppingCartDTO(
+            this.shoppingCartService.addProduct(idShoppingCart, idProduct, quantity)));
+  }
+
+  @DeleteMapping("/{idShoppingCart}/product/{idProduct}")
+  public ResponseEntity<ShoppingCartResponseDTO> deleteProductFromShoppingCart(
       @PathVariable long idShoppingCart,
       @PathVariable long idProduct) {
     return ResponseEntity.ok().body(
-        fromFullShoppingCartDTO(this.shoppingCartService.addProduct(idShoppingCart, idProduct)));
+        fromFullShoppingCartDTO(
+            this.shoppingCartService.deleteProduct(idShoppingCart, idProduct).get()));
   }
 
 }

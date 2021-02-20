@@ -2,13 +2,15 @@ package es.urjc.code.ecommmerce.infrastructure.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,6 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = ProductEntity.TABLE_NAME)
+@Builder
 public class ProductEntity {
 
   public static final String TABLE_NAME = "product";
@@ -27,7 +30,7 @@ public class ProductEntity {
   String name;
   String description;
 
-  @ManyToMany(mappedBy = "products")
-  private List<ShoppingCartEntity> shoppingCarts = new ArrayList<>();
+  @OneToMany(mappedBy = "product", cascade = CascadeType.MERGE, orphanRemoval = true)
+  private List<ShoppingCartProductEntity> shoppingCarts = new ArrayList<>();
 
 }

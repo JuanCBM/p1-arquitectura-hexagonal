@@ -8,10 +8,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import javax.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 @Component
+@Transactional
 public class ProductRepositoryAdapter implements ProductRepository {
 
   private static final ModelMapper modelMapper = new ModelMapper();

@@ -11,5 +11,7 @@ public interface ShoppingCartRepository {
 
   void deleteShoppingCartById(long id);
 
-  FullShoppingCartDTO addProduct(long idShoppingCart, long idProduct);
+  FullShoppingCartDTO addProduct(long idShoppingCart, long idProduct, long quantity);
+
+  Optional<FullShoppingCartDTO> deleteProduct(long idShoppingCart, long idProduct);
 }

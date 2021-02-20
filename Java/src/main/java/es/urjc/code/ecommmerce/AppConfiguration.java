@@ -6,6 +6,7 @@ import es.urjc.code.ecommmerce.domain.usecase.ShoppingCartUseCase;
 import es.urjc.code.ecommmerce.domain.usecase.ShoppingCartUseCaseImpl;
 import es.urjc.code.ecommmerce.infrastructure.ProductRepositoryAdapter;
 import es.urjc.code.ecommmerce.infrastructure.ShoppingCartRespositoryAdapter;
+import es.urjc.code.ecommmerce.service.ShoppingCartValidationService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,8 +20,10 @@ public class AppConfiguration {
 
   @Bean
   public ShoppingCartUseCase shoppingCartUseCase(
-      ShoppingCartRespositoryAdapter shoppingCartRespositoryAdapter) {
-    return new ShoppingCartUseCaseImpl(shoppingCartRespositoryAdapter);
+      ShoppingCartRespositoryAdapter shoppingCartRespositoryAdapter,
+      ShoppingCartValidationService shoppingCartValidationService) {
+    return new ShoppingCartUseCaseImpl(shoppingCartRespositoryAdapter,
+        shoppingCartValidationService);
   }
 
 }

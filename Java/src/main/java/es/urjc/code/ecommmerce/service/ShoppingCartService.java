@@ -1,6 +1,8 @@
 package es.urjc.code.ecommmerce.service;
 
 import es.urjc.code.ecommmerce.controller.dto.ShoppingCartRequestDTO;
+import es.urjc.code.ecommmerce.controller.exception.ProductNotFoundException;
+import es.urjc.code.ecommmerce.domain.exceptions.ProductNotAvailableException;
 import es.urjc.code.ecommmerce.domain.model.dto.FullShoppingCartDTO;
 import es.urjc.code.ecommmerce.domain.model.dto.ShoppingCartDTO;
 import es.urjc.code.ecommmerce.domain.usecase.ShoppingCartUseCase;
@@ -38,17 +40,29 @@ public class ShoppingCartService {
 
   public FullShoppingCartDTO endShoppingCart(long id) {
     this.findById(id).orElseThrow(NoSuchElementException::new);
-    return this.shoppingCartUseCase.endShoppingCart(id);
+    FullShoppingCartDTO fullShoppingCartDTO;
+    try {
+      fullShoppingCartDTO = this.shoppingCartUseCase.endShoppingCart(id);
+    } catch (ProductNotAvailableException e) {
+      throw new ProductNotFoundException();
+    }
+    return fullShoppingCartDTO;
   }
 
   private ShoppingCartDTO toShoppingCartDTO(Object shoppingCartRequestDTO) {
     return this.modelMapper.map(shoppingCartRequestDTO, ShoppingCartDTO.class);
   }
 
-  public FullShoppingCartDTO addProduct(long idShoppingCart, long idProduct) {
+  public FullShoppingCartDTO addProduct(long idShoppingCart, long idProduct, long quantity) {
     this.findById(idShoppingCart).orElseThrow(NoSuchElementException::new);
     this.productService.findById(idProduct).orElseThrow(NoSuchElementException::new);
-    return this.shoppingCartUseCase.addProduct(idShoppingCart, idProduct);
+    return this.shoppingCartUseCase.addProduct(idShoppingCart, idProduct, quantity);
 
+  }
+
+  public Optional<FullShoppingCartDTO> deleteProduct(long idShoppingCart, long idProduct) {
+    this.findById(idShoppingCart).orElseThrow(NoSuchElementException::new);
+    this.productService.findById(idProduct).orElseThrow(NoSuchElementException::new);
+    return this.shoppingCartUseCase.deleteProduct(idShoppingCart, idProduct);
   }
 }
