@@ -95,6 +95,11 @@ public class ShoppingCartRespositoryAdapter implements ShoppingCartRepository {
     return shoppingCart.map(ShoppingCartRespositoryAdapter::toFullShoppingCartDTO);
   }
 
+  @Override
+  public void endShoppingCart(long idShoppingCart) {
+    this.shoppingCartJpaRepository.endShoppingCart(idShoppingCart);
+  }
+
   private ShoppingCartEntity toShoppingCartEntity(final Object fullShoppingCartDTO) {
     return modelMapper.map(fullShoppingCartDTO, ShoppingCartEntity.class);
   }

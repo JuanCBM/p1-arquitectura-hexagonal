@@ -1,6 +1,7 @@
 package es.urjc.code.ecommmerce.service;
 
 import es.urjc.code.ecommmerce.controller.dto.ShoppingCartRequestDTO;
+import es.urjc.code.ecommmerce.domain.exceptions.ProductNotAvailableException;
 import es.urjc.code.ecommmerce.domain.model.dto.FullShoppingCartDTO;
 import es.urjc.code.ecommmerce.domain.model.dto.ShoppingCartDTO;
 import es.urjc.code.ecommmerce.domain.usecase.ShoppingCartUseCase;
@@ -33,7 +34,11 @@ public class ShoppingCartService {
   }
 
   public FullShoppingCartDTO endShoppingCart(long id) {
-    return this.shoppingCartUseCase.endShoppingCart(id);
+    try {
+      return this.shoppingCartUseCase.endShoppingCart(id);
+    } catch (ProductNotAvailableException e) {
+      throw new es.urjc.code.ecommmerce.controller.exception.ProductNotAvailableException();
+    }
   }
 
   public FullShoppingCartDTO addProduct(long idShoppingCart, long idProduct, long quantity) {

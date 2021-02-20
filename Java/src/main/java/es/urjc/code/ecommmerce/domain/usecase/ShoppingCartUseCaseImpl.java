@@ -38,18 +38,19 @@ public class ShoppingCartUseCaseImpl implements ShoppingCartUseCase {
   }
 
   @Override
-  public FullShoppingCartDTO endShoppingCart(long id) {
+  public FullShoppingCartDTO endShoppingCart(long id) throws ProductNotAvailableException {
     Optional<FullShoppingCartDTO> fullShoppingCartDTO = this.shoppingCartRepository
         .findShoppingCartById(id);
 
     if (this.shoppingCartValidationService
         .validateShoppingCart(fullShoppingCartDTO.get().getProducts())) {
       fullShoppingCartDTO.get().setCompleted(Boolean.TRUE);
+      this.shoppingCartRepository.endShoppingCart(id);
     } else {
       throw new ProductNotAvailableException();
     }
 
-    return this.shoppingCartRepository.save(fullShoppingCartDTO.get());
+    return fullShoppingCartDTO.get();
   }
 
   @Override

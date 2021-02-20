@@ -1,5 +1,6 @@
 package es.urjc.code.ecommmerce.domain.usecase;
 
+import es.urjc.code.ecommmerce.domain.exceptions.ProductNotAvailableException;
 import es.urjc.code.ecommmerce.domain.model.dto.FullShoppingCartDTO;
 import es.urjc.code.ecommmerce.domain.model.dto.ShoppingCartDTO;
 import java.util.Optional;
@@ -12,7 +13,7 @@ public interface ShoppingCartUseCase {
 
   void deleteShoppingCartById(long id);
 
-  FullShoppingCartDTO endShoppingCart(long id);
+  FullShoppingCartDTO endShoppingCart(long id) throws ProductNotAvailableException;
 
   FullShoppingCartDTO addProduct(long idShoppingCart, long idProduct, long quantity);
 
