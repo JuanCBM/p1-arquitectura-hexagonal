@@ -61,11 +61,8 @@ public class ProductController {
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteProduct(@PathVariable long id) {
-    this.productService.findById(id).orElseThrow(ProductNotFoundException::new);
     this.productService.deleteById(id);
-
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
   }
 
 }

@@ -31,8 +31,7 @@ public class ProductRepositoryAdapter implements ProductRepository {
 
   @Override
   public Optional<FullProductDTO> findProductById(long id) {
-    Optional<ProductEntity> productEntityOptional = this.productJpaRepository.findById(id);
-    return productEntityOptional.map(ProductRepositoryAdapter::toFullProductDTO);
+    return this.productJpaRepository.findById(id).map(ProductRepositoryAdapter::toFullProductDTO);
   }
 
   @Override
@@ -47,7 +46,9 @@ public class ProductRepositoryAdapter implements ProductRepository {
 
   @Override
   public void deleteProductById(long id) {
-    this.productJpaRepository.deleteById(id);
+    if (this.productJpaRepository.findById(id).isPresent()) {
+      this.productJpaRepository.deleteById(id);
+    }
   }
 
   private ProductEntity toProductEntity(final FullProductDTO fullProductDTO) {

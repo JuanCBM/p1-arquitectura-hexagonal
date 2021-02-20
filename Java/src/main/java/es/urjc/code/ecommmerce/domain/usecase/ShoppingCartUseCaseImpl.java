@@ -38,7 +38,7 @@ public class ShoppingCartUseCaseImpl implements ShoppingCartUseCase {
   }
 
   @Override
-  public FullShoppingCartDTO endShoppingCart(long id) throws ProductNotAvailableException {
+  public FullShoppingCartDTO endShoppingCart(long id) {
     Optional<FullShoppingCartDTO> fullShoppingCartDTO = this.shoppingCartRepository
         .findShoppingCartById(id);
 

@@ -5,8 +5,13 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 
 import es.urjc.code.ecommmerce.controller.dto.ShoppingCartRequestDTO;
 import es.urjc.code.ecommmerce.controller.dto.ShoppingCartResponseDTO;
+import es.urjc.code.ecommmerce.controller.exception.ProductNotFoundException;
+import es.urjc.code.ecommmerce.controller.exception.ShoppingCartNotFoundException;
+import es.urjc.code.ecommmerce.domain.model.dto.FullShoppingCartDTO;
+import es.urjc.code.ecommmerce.service.ProductService;
 import es.urjc.code.ecommmerce.service.ShoppingCartService;
 import java.net.URI;
+import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,9 +28,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class ShoppingCartController {
 
   private final ShoppingCartService shoppingCartService;
+  private final ProductService productService;
 
-  public ShoppingCartController(ShoppingCartService shoppingCartService) {
+  public ShoppingCartController(ShoppingCartService shoppingCartService,
+      ProductService productService) {
     this.shoppingCartService = shoppingCartService;
+    this.productService = productService;
   }
 
   @PostMapping({"/", ""})
@@ -47,7 +55,7 @@ public class ShoppingCartController {
   public ResponseEntity<ShoppingCartResponseDTO> getShoppingCart(@PathVariable long id) {
     return ResponseEntity.ok().body(this.shoppingCartService.findById(id)
         .map(ShoppingCartResponseDTO::fromFullShoppingCartDTO)
-        .orElseThrow());
+        .orElseThrow(ShoppingCartNotFoundException::new));
   }
 
   @DeleteMapping("/{id}")
@@ -67,6 +75,10 @@ public class ShoppingCartController {
       @PathVariable long idShoppingCart,
       @PathVariable long idProduct,
       @PathVariable long quantity) {
+    this.shoppingCartService.findById(idShoppingCart)
+        .orElseThrow(ShoppingCartNotFoundException::new);
+    this.productService.findById(idProduct).orElseThrow(ProductNotFoundException::new);
+
     return ResponseEntity.ok().body(
         fromFullShoppingCartDTO(
             this.shoppingCartService.addProduct(idShoppingCart, idProduct, quantity)));
@@ -76,9 +88,16 @@ public class ShoppingCartController {
   public ResponseEntity<ShoppingCartResponseDTO> deleteProductFromShoppingCart(
       @PathVariable long idShoppingCart,
       @PathVariable long idProduct) {
-    return ResponseEntity.ok().body(
-        fromFullShoppingCartDTO(
-            this.shoppingCartService.deleteProduct(idShoppingCart, idProduct).get()));
+
+    Optional<FullShoppingCartDTO> optionalFullShoppingCartDTO = this.shoppingCartService
+        .deleteProductById(idShoppingCart, idProduct);
+
+    if (optionalFullShoppingCartDTO.isPresent()) {
+      return ResponseEntity.ok().body(fromFullShoppingCartDTO(optionalFullShoppingCartDTO.get()));
+    } else {
+      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
   }
 
 }

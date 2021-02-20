@@ -31,9 +31,9 @@ public class ShoppingCartRespositoryAdapter implements ShoppingCartRepository {
   }
 
   @Override
-  public FullShoppingCartDTO save(final FullShoppingCartDTO fullShoppingCartDTO) {
-    ShoppingCartEntity productEntity = this.toShoppingCartEntity(fullShoppingCartDTO);
-    return toFullShoppingCartDTO(this.shoppingCartJpaRepository.save(productEntity));
+  public FullShoppingCartDTO save(final FullShoppingCartDTO shoppingCartDTO) {
+    return toFullShoppingCartDTO(
+        this.shoppingCartJpaRepository.save(this.toShoppingCartEntity(shoppingCartDTO)));
   }
 
   @Override
@@ -44,7 +44,9 @@ public class ShoppingCartRespositoryAdapter implements ShoppingCartRepository {
 
   @Override
   public void deleteShoppingCartById(long id) {
-    this.shoppingCartJpaRepository.deleteById(id);
+    if (this.shoppingCartJpaRepository.findById(id).isPresent()) {
+      this.shoppingCartJpaRepository.deleteById(id);
+    }
   }
 
   @Override
@@ -74,18 +76,26 @@ public class ShoppingCartRespositoryAdapter implements ShoppingCartRepository {
   public Optional<FullShoppingCartDTO> deleteProduct(long idShoppingCart, long idProduct) {
     Optional<ShoppingCartEntity> shoppingCart = this.shoppingCartJpaRepository
         .findById(idShoppingCart);
-    ShoppingCartProductEntity shoppingCartProductEntity = shoppingCart.get().getProducts().stream()
-        .filter(shoppingCartProduct -> shoppingCartProduct.getProduct().getId().equals(idProduct))
-        .findFirst().orElse(null);
 
-    shoppingCart.get().getProducts().remove(shoppingCartProductEntity);
+    if (shoppingCart.isPresent()) {
+      Optional<ShoppingCartProductEntity> shoppingCartProductEntity = shoppingCart.get()
+          .getProducts()
+          .stream()
+          .filter(shoppingCartProduct -> shoppingCartProduct.getProduct().getId().equals(idProduct))
+          .findFirst();
 
-    this.shoppingCartProductJpaRepository.delete(shoppingCartProductEntity);
+      if (shoppingCartProductEntity.isPresent()) {
+        shoppingCart.get().getProducts().remove(shoppingCartProductEntity);
+
+        this.shoppingCartProductJpaRepository.delete(shoppingCartProductEntity.get());
+      }
+
+    }
 
     return shoppingCart.map(ShoppingCartRespositoryAdapter::toFullShoppingCartDTO);
   }
 
-  private ShoppingCartEntity toShoppingCartEntity(final FullShoppingCartDTO fullShoppingCartDTO) {
+  private ShoppingCartEntity toShoppingCartEntity(final Object fullShoppingCartDTO) {
     return modelMapper.map(fullShoppingCartDTO, ShoppingCartEntity.class);
   }
 
