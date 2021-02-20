@@ -2,10 +2,10 @@
   "name": "hexagonal-architecture-node",
   "version": "0.0.1",
   "description": "Hexagonal architecture in nodeJS",
-  "main": "src/server.js",
+  "main": "./src/server.js",
   "scripts": {
-    "develop": "nodemon src/server.js",
-    "start": "node src/server.js",
+    "develop": "nodemon ./src/server.js",
+    "start": "node ./src/server.js",
     "test": "jest"
   },
   "repository": {
