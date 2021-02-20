@@ -16,15 +16,17 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductEntity {
+public class ShoppingCartEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
-  String name;
-  String description;
 
-  @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<ProductShoppingCartEntity> shoppingCarts = new ArrayList<>();
+  boolean validated;
+  boolean completed;
+  String ownerName;
 
+  @OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<ProductShoppingCartEntity> products = new ArrayList<>();
+  
 }

@@ -1,5 +1,7 @@
-package es.urjc.code.ecommmerce.domain;
+package es.urjc.code.ecommmerce.domain.usecase;
 
+import es.urjc.code.ecommmerce.domain.model.dto.FullProductDTO;
+import es.urjc.code.ecommmerce.domain.model.dto.ProductDTO;
 import java.util.Collection;
 import java.util.Optional;
 

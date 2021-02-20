@@ -1,6 +1,6 @@
 package es.urjc.code.ecommmerce.controller.dto;
 
-import es.urjc.code.ecommmerce.domain.FullProductDTO;
+import es.urjc.code.ecommmerce.domain.model.dto.FullProductDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +17,7 @@ public class ProductResponseDTO {
   String name;
   String description;
 
-  public static ProductResponseDTO fromFullProductDto(FullProductDTO fullProductDTO) {
+  public static ProductResponseDTO fromFullProductDTO(FullProductDTO fullProductDTO) {
     return modelMapper.map(fullProductDTO, ProductResponseDTO.class);
   }
 

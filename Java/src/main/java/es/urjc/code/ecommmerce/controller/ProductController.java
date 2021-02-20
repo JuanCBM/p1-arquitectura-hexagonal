@@ -1,11 +1,10 @@
 package es.urjc.code.ecommmerce.controller;
 
-import static es.urjc.code.ecommmerce.controller.dto.ProductResponseDTO.fromFullProductDto;
+import static es.urjc.code.ecommmerce.controller.dto.ProductResponseDTO.fromFullProductDTO;
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
 import es.urjc.code.ecommmerce.controller.dto.ProductRequestDTO;
 import es.urjc.code.ecommmerce.controller.dto.ProductResponseDTO;
-import es.urjc.code.ecommmerce.domain.FullProductDTO;
 import es.urjc.code.ecommmerce.service.ProductService;
 import java.net.URI;
 import java.util.Collection;
@@ -33,11 +32,10 @@ public class ProductController {
 
   @PostMapping({"/", ""})
   public ResponseEntity<ProductResponseDTO> createProduct(
-      @RequestBody ProductRequestDTO productRequestDto) {
+      @RequestBody ProductRequestDTO productRequestDTO) {
 
-    FullProductDTO fullProductDTO = this.productService.save(productRequestDto);
-
-    ProductResponseDTO productResponseDto = fromFullProductDto(fullProductDTO);
+    ProductResponseDTO productResponseDto = fromFullProductDTO(
+        this.productService.save(productRequestDTO));
 
     URI location = fromCurrentRequest().path("/{id}").buildAndExpand(productResponseDto.getId())
         .toUri();
@@ -50,13 +48,13 @@ public class ProductController {
     return this.productService
         .findAll()
         .stream()
-        .map(ProductResponseDTO::fromFullProductDto)
+        .map(ProductResponseDTO::fromFullProductDTO)
         .collect(Collectors.toList());
   }
 
   @GetMapping("/{id}")
   public ProductResponseDTO getProduct(@PathVariable long id) {
-    return this.productService.findById(id).map(ProductResponseDTO::fromFullProductDto)
+    return this.productService.findById(id).map(ProductResponseDTO::fromFullProductDTO)
         .orElseThrow();
   }
 

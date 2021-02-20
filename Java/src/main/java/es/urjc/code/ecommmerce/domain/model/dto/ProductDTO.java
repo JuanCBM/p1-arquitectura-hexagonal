@@ -1,4 +1,4 @@
-package es.urjc.code.ecommmerce.domain;
+package es.urjc.code.ecommmerce.domain.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

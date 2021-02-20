@@ -1,7 +1,7 @@
 package es.urjc.code.ecommmerce.infrastructure;
 
-import es.urjc.code.ecommmerce.domain.FullProductDTO;
-import es.urjc.code.ecommmerce.domain.ProductRepository;
+import es.urjc.code.ecommmerce.domain.model.dto.FullProductDTO;
+import es.urjc.code.ecommmerce.domain.repository.ProductRepository;
 import es.urjc.code.ecommmerce.infrastructure.model.ProductEntity;
 import es.urjc.code.ecommmerce.infrastructure.repository.ProductJpaRepository;
 import java.util.Collection;
@@ -49,7 +49,7 @@ public class ProductRepositoryAdapter implements ProductRepository {
   }
 
   private ProductEntity toProductEntity(final FullProductDTO fullProductDTO) {
-    return this.modelMapper.map(fullProductDTO, ProductEntity.class);
+    return modelMapper.map(fullProductDTO, ProductEntity.class);
   }
 
   private static FullProductDTO toFullProductDTO(final ProductEntity productEntity) {
