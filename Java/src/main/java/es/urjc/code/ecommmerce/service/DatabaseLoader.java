@@ -6,7 +6,6 @@ import es.urjc.code.ecommmerce.infrastructure.model.ShoppingCartProductEntity;
 import es.urjc.code.ecommmerce.infrastructure.repository.ProductJpaRepository;
 import es.urjc.code.ecommmerce.infrastructure.repository.ShoppingCartJpaRepository;
 import es.urjc.code.ecommmerce.infrastructure.repository.ShoppingCartProductJpaRepository;
-import java.text.ParseException;
 import java.util.Arrays;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
@@ -27,7 +26,7 @@ public class DatabaseLoader implements CommandLineRunner {
   }
 
   @Override
-  public void run(String... args) throws ParseException {
+  public void run(String... args) {
     ProductEntity productEntity = ProductEntity.builder().name("Monitor")
         .description("Monitor 27 pulgadas LG").build();
     ProductEntity productEntity2 = ProductEntity.builder().name("Teclado")
