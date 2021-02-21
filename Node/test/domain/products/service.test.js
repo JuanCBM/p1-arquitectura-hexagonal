@@ -7,38 +7,17 @@ function createProducts() {
   return [p1, p2];
 }
 
-describe('product service test', async () => {
+test('product service test', () => {
+  const findAll = jest.fn();
+  findAll.mockReturnValue(createProducts());
+  let productRepository = { findAll };
+  let productService = productServiceFactory.init({productRepository});
 
-
-  it('product get all test', (done) => {
-    const findAll = jest.fn();
-    findAll.mockReturnValue(createProducts());
-
-    let productRepository = { findAll };
-
-    let productService = productServiceFactory.init(productRepository);
-
-    productService.findAllProducts.resolves(createProducts());
-    productService.findAllProducts()
-    .then((products) => {
-      expect(products).to.have.lengthOf(2);
-      expect(products).to.eql(createProducts());
-      return done();
-    });
+  productService.findAllProducts().then((products) => {
+    expect(products).to.have.lengthOf(2);
+    expect(products).to.eql(createProducts());
+    return done();
   });
-
-
-/*
-  it('should call the repository to list products using findAll function', (done) => {
-    productService.findAll.resolves(createProducts());
-    productService.findAll
-    .then((products) => {
-      expect(products).to.have.lengthOf(2);
-      expect(products).to.eql(createProducts());
-      return done();
-    });
-  });
-  */
 
 });
 
