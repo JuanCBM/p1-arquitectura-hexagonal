@@ -26,7 +26,10 @@ function init({ shoppingCartService }) {
   router.patch('/:id', async (req, res) => {
     const shoppingCart = await shoppingCartService.updateStatus({
       id: req.params.id,
-    });
+    }).catch(function (err) {
+      res.status(409).json({message: err.message})
+    })
+
     return res.send(toResponseModel(shoppingCart));
   });
 
