@@ -23,10 +23,9 @@ function init({ shoppingCartService }) {
     return res.send(toResponseModel(shoppingCart));
   });
 
-  router.post('/:id', async (req, res) => {
+  router.patch('/:id', async (req, res) => {
     const shoppingCart = await shoppingCartService.updateStatus({
       id: req.params.id,
-      completed: req.body.completed
     });
     return res.send(toResponseModel(shoppingCart));
   });

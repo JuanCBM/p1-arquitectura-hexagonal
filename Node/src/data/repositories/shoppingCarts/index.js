@@ -34,7 +34,7 @@ const shoppingCartStore = {
       const { ShoppingCart : shoppingCartSchema } = this.getSchemas();
       const shoppingCart = await shoppingCartSchema.findOneAndUpdate(
           {_id:params.id},
-          {completed: params.completed},
+          {completed: true},
           {new: true}
       );
       if(!shoppingCart) {

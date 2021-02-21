@@ -1,4 +1,4 @@
-function init({ shoppingCartRepository }) {
+function init({ shoppingCartRepository, shoppingCartValidationService }) {
 
   async function create() {
     return await shoppingCartRepository.createShoppingCart();
@@ -14,8 +14,12 @@ function init({ shoppingCartRepository }) {
     return await shoppingCartRepository.getShoppingCart({ shoppingCart });
   }
 
-  async function updateStatus( {id, completed} ){
-    return await shoppingCartRepository.updateStatusShoppingCart({ id, completed });
+  async function updateStatus( {id} ){
+    if(shoppingCartValidationService.validateShoppingCart({id})){
+      return await shoppingCartRepository.updateStatusShoppingCart({ id });
+    }else{
+      throw new Error('Product not available');
+    }
   }
 
   return {
