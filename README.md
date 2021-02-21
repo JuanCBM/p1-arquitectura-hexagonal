@@ -74,6 +74,13 @@ DTO:
 
 ARQUITECTURA POR CAPAS EN SPRING:
 
+ARQUITECTURA POR CAPAS EN NODEJS:
+
+  -Creacion del Docker:
+  
+  ``` docker run --name shopping-cart  -p 27017:27017 -d mongo:latest ```
+
+
 
 
 
