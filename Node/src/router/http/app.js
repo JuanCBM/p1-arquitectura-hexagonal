@@ -1,15 +1,18 @@
-var express = require('express');
+let express = require('express');
 
-var productRouter = require('./routes/products/routes');
+let productRouter = require('./routes/products/routes');
+let shoppingCartRouter = require('./routes/shoppingCarts/routes');
+
 const http = require('http');
 
-var app = express();
+let app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 module.exports.init = (services) => {
-  app.use('/products', productRouter.init(services));
+  app.use('/api/products', productRouter.init(services));
+  app.use('/api/shoppingcarts', shoppingCartRouter.init(services));
   const httpServer = http.createServer(app);
   return httpServer;
 };

@@ -1,13 +1,18 @@
 const productRepositoryContainer = require('./data/repositories/products');
 const productServiceContainer = require('./domain/products/service');
+const shoppingCartServiceContainer = require('./domain/shoppingCarts/service');
+const shoppingCartRepositoryContainer = require('./data/repositories/shoppingCarts');
+
 const appContainer = require('./router/http/app')
 const db = require('./data/infrastructure/db')({dbConnectionString: 'mongodb://127.0.0.1:27017/shopping-cart'});
 
 const productRepository = productRepositoryContainer.init(db.schemas);
+const shoppingCartRepository = shoppingCartRepositoryContainer.init(db.schemas);
 
-const productService = productServiceContainer.init({ productRepository });
+const shoppingCartService = shoppingCartServiceContainer.init({shoppingCartRepository});
+const productService = productServiceContainer.init({productRepository});
 
-const app = appContainer.init({ productService });
+const app = appContainer.init({ productService, shoppingCartService });
 
 let server = app.listen('3000', () => {
   console.log('App listening on port 3000!');
