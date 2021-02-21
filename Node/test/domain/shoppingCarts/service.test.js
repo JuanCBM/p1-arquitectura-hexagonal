@@ -1,7 +1,8 @@
 const ShoppingCart = require('../../../src/domain/shoppingCarts/model');
 const Product = require('../../../src/domain/products/model');
 
-const shoppingCartServiceFactory = require('../../../src/domain/shoppingCarts/service');
+const shoppingCartServiceFactory = require(
+    '../../../src/domain/shoppingCarts/service');
 
 function createShoppingCart() {
   return new ShoppingCart({products: createProducts(), completed: false});
@@ -22,7 +23,8 @@ describe('Shopping cart unit tests', () => {
     const createShoppingCart = jest.fn();
     createShoppingCart.mockReturnValue(createEmptyShoppingCart());
     let shoppingCartRepository = {createShoppingCart};
-    let shoppingCartService = shoppingCartServiceFactory.init({shoppingCartRepository});
+    let shoppingCartService = shoppingCartServiceFactory.init(
+        {shoppingCartRepository});
 
     shoppingCartService.create().then((shoppingCart) => {
       expect(shoppingCart.products.length).toBe(0);
@@ -31,22 +33,26 @@ describe('Shopping cart unit tests', () => {
 
   });
 
-  test('Given shopping cart, product and quantity When add product Then OK', () => {
-    let shoppingCartToUpdate = createShoppingCart();
-    let productToAdd = createProducts()[0];
-    let quantity = 1;
+  test('Given shopping cart, product and quantity When add product Then OK',
+      () => {
+        let shoppingCartToUpdate = createShoppingCart();
+        let productToAdd = createProducts()[0];
+        let quantity = 1;
 
-    const updateShoppingCart = jest.fn();
-    updateShoppingCart.mockReturnValue(shoppingCartToUpdate);
-    let shoppingCartRepository = {updateShoppingCart};
-    let shoppingCartService = shoppingCartServiceFactory.init({shoppingCartRepository});
+        const updateShoppingCart = jest.fn();
+        updateShoppingCart.mockReturnValue(shoppingCartToUpdate);
+        let shoppingCartRepository = {updateShoppingCart};
+        let shoppingCartService = shoppingCartServiceFactory.init(
+            {shoppingCartRepository});
 
-    shoppingCartService.addProductWithQuantity({shoppingCartToUpdate, productToAdd, quantity}).then((shoppingCart) => {
-      expect(shoppingCart.products.length).toBe(1);
-    });
+        shoppingCartService.addProductWithQuantity(
+            {shoppingCartToUpdate, productToAdd, quantity}).then(
+            (shoppingCart) => {
+              expect(shoppingCart.products.length).toBe(1);
+            });
 
-  });
+      });
 
   // TODO: Test other functions
-  
+
 });

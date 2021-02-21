@@ -42,7 +42,7 @@ Proyecto Java:
 
 **2.** Ejecutamos el proyecto en nuestro IDE.
 
-**3.** Ejecutar los tests.
+**3.** Ejecutar los tests (npm test o jest test).
 
 ## Apuntes teóricos
 **Modelo de 4+1 vistas**
@@ -78,6 +78,7 @@ Principios de relación: Cómo se relacionan los componentes entre sí
 - Los datos:
 	- Los datos de implementación no deben ser expuestos por la capa que que es llamada.
 	- La capa que llama debe tener su propio modelo de datos.
+	
 	---> Utilizaremos DTOs.
 - Capas:
 	- Presentación: Controladores
