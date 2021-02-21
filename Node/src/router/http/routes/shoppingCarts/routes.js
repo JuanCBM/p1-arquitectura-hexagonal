@@ -24,13 +24,16 @@ function init({ shoppingCartService }) {
   });
 
   router.patch('/:id', async (req, res) => {
-    const shoppingCart = await shoppingCartService.updateStatus({
+    shoppingCartService.updateStatus({
       id: req.params.id,
-    }).catch(function (err) {
+    }).then((shoppingCart) => {
+      return res.send(toResponseModel(shoppingCart));
+    })
+    .catch(function (err) {
       res.status(409).json({message: err.message})
+      return res.send();
     })
 
-    return res.send(toResponseModel(shoppingCart));
   });
 
   return router;
