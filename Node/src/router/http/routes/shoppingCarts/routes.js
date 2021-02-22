@@ -36,6 +36,18 @@ function init({ shoppingCartService }) {
 
   });
 
+  router.delete('/:id', async (req, res) => {
+    const shoppingCart = await shoppingCartService.deletedById({ id: req.params.id });
+    return res.send(toResponseModel(shoppingCart));
+  });
+
+  router.delete('/:cart_id/products/:prod_id', async (req, res) => {
+    const shoppingCart = await shoppingCartService.removeProduct({
+      shoppingCart: req.params.cart_id,
+      product: req.params.prod_id });
+    return res.send(toResponseModel(shoppingCart));
+  })
+
   return router;
 }
 

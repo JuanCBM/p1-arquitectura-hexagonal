@@ -28,7 +28,8 @@ function init({ productService }) {
   router.delete('/:id', async (req, res) => {
     const product = await productService.deleteById({ id: req.params.id });
     return res.send(toResponseModel(product));
-  })
+  });
+  
   return router;
 }
 

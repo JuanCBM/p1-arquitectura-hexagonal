@@ -15,6 +15,7 @@ function init({ shoppingCartRepository, shoppingCartValidationService }) {
   }
 
   async function updateStatus( {id} ){
+
     if(shoppingCartValidationService.validateShoppingCart({id})){
       return await shoppingCartRepository.updateStatusShoppingCart({ id });
     }else{
@@ -22,11 +23,21 @@ function init({ shoppingCartRepository, shoppingCartValidationService }) {
     }
   }
 
+  async function deletedById({ id }) {
+    return await shoppingCartRepository.deleteById({ id });
+  }
+
+  async function removeProduct({ shoppingCart, product }) {
+    return await shoppingCartRepository.removeProduct({ shoppingCart, product });
+  }
+
   return {
     create,
     addProductWithQuantity,
     findById,
-    updateStatus
+    updateStatus,
+    deletedById,
+    removeProduct
   }
 }
 
