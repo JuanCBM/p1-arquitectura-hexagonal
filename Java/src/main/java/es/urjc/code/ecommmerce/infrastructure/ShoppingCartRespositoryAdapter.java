@@ -85,8 +85,7 @@ public class ShoppingCartRespositoryAdapter implements ShoppingCartRepository {
           .findFirst();
 
       if (shoppingCartProductEntity.isPresent()) {
-        shoppingCart.get().getProducts().remove(shoppingCartProductEntity);
-
+        shoppingCart.get().getProducts().remove(shoppingCartProductEntity.get());
         this.shoppingCartProductJpaRepository.delete(shoppingCartProductEntity.get());
       }
 

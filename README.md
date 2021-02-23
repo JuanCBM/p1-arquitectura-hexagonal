@@ -34,6 +34,8 @@ Proyecto Java:
 
 **2.** Utilizar la colección de postman facilitada en la raíz del proyecto para probar la aplicación.
 
+* Hemos añadido algunos datos de ejemplo para facilitar las pruebas.
+
 **3.** Ejecutar los tests.
 
 ## Proyecto Node

@@ -6,7 +6,6 @@ function init({ shoppingCartRepository, shoppingCartValidationService }) {
 
   async function addProductWithQuantity({ shoppingCart, product, quantity }) {
     const shoppingCartFound = await shoppingCartRepository.updateShoppingCart({ shoppingCart, product, quantity });
-    console.log('shoppingCartFound', shoppingCartFound);
     return shoppingCartFound;
   }
 

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "fb03a6e7-96f8-4efc-82f0-bad64451593c",
+		"_postman_id": "43ae4e59-3c81-495e-ad70-22b0c6bb3020",
 		"name": "E-Commerce",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -157,7 +157,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/shoppingcarts/5",
+									"raw": "http://localhost:8080/api/shoppingcarts/4",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -166,7 +166,7 @@
 									"path": [
 										"api",
 										"shoppingcarts",
-										"5"
+										"4"
 									]
 								}
 							},
@@ -190,7 +190,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/shoppingcarts/4",
+									"raw": "http://localhost:8080/api/shoppingcarts/5",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -199,7 +199,41 @@
 									"path": [
 										"api",
 										"shoppingcarts",
-										"4"
+										"5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add product to shopping cart",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/shoppingcarts/5/product/2/quantity/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"shoppingcarts",
+										"5",
+										"product",
+										"2",
+										"quantity",
+										"2"
 									]
 								}
 							},
@@ -220,7 +254,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/shoppingcarts/2",
+									"raw": "http://localhost:8080/api/shoppingcarts/5",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -229,7 +263,7 @@
 									"path": [
 										"api",
 										"shoppingcarts",
-										"2"
+										"5"
 									]
 								}
 							},
@@ -266,40 +300,6 @@
 							"response": []
 						},
 						{
-							"name": "Add product to shopping cart",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/shoppingcarts/4/product/3/quantity/1",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"shoppingcarts",
-										"4",
-										"product",
-										"3",
-										"quantity",
-										"1"
-									]
-								}
-							},
-							"response": []
-						},
-						{
 							"name": "Delete product to shopping cart Copy",
 							"request": {
 								"method": "DELETE",
@@ -314,7 +314,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/shoppingcarts/4/product/2",
+									"raw": "http://localhost:8080/api/shoppingcarts/5/product/2",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -323,7 +323,7 @@
 									"path": [
 										"api",
 										"shoppingcarts",
-										"4",
+										"5",
 										"product",
 										"2"
 									]
@@ -342,6 +342,36 @@
 					"name": "Products",
 					"item": [
 						{
+							"name": "Create product",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"name\": \"Cargador\",\r\n\t\"description\": \"Cargador de móvil Apple\"\t\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/products/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Delete product",
 							"request": {
 								"method": "DELETE",
@@ -356,12 +386,12 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/products/3",
+									"raw": "http://localhost:3000/api/products/3",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "3000",
 									"path": [
 										"api",
 										"products",
@@ -389,16 +419,16 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/products/1",
+									"raw": "http://localhost:3000/api/products/60352581ca21d32704442b09",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "3000",
 									"path": [
 										"api",
 										"products",
-										"1"
+										"60352581ca21d32704442b09"
 									]
 								}
 							},
@@ -422,42 +452,12 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/products/",
+									"raw": "http://localhost:3000/api/products/",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
-									"path": [
-										"api",
-										"products",
-										""
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create product",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n\t\"name\": \"Cargador\",\r\n\t\"description\": \"Cargador de móvil Apple\"\t\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/products/",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
+									"port": "3000",
 									"path": [
 										"api",
 										"products",
@@ -473,6 +473,36 @@
 					"name": "Shopping carts",
 					"item": [
 						{
+							"name": "Create shopping cart",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"ownerName\": \"Juan Carlos\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/shoppingcarts/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"shoppingcarts",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Delete shopping cart",
 							"request": {
 								"method": "DELETE",
@@ -487,16 +517,16 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/shoppingcarts/5",
+									"raw": "http://localhost:3000/api/shoppingcarts/603525b4ca21d32704442b0b",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "3000",
 									"path": [
 										"api",
 										"shoppingcarts",
-										"5"
+										"603525b4ca21d32704442b0b"
 									]
 								}
 							},
@@ -520,76 +550,16 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/shoppingcarts/4",
+									"raw": "http://localhost:3000/api/shoppingcarts/603525b4ca21d32704442b0b",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "3000",
 									"path": [
 										"api",
 										"shoppingcarts",
-										"4"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Update Status Shopping cart",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n\t\"completed\": true\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:{{port}}/api/shoppingcarts/2",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "{{port}}",
-									"path": [
-										"api",
-										"shoppingcarts",
-										"2"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create shopping cart",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n\t\"ownerName\": \"Juan Carlos\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/shoppingcarts/",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"shoppingcarts",
-										""
+										"603525b4ca21d32704442b0b"
 									]
 								}
 							},
@@ -610,20 +580,50 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/shoppingcarts/4/product/3/quantity/1",
+									"raw": "http://localhost:3000/api/shoppingcarts/603525b4ca21d32704442b0b/product/603525bfca21d32704442b0c/quantity/1",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "3000",
 									"path": [
 										"api",
 										"shoppingcarts",
-										"4",
+										"603525b4ca21d32704442b0b",
 										"product",
-										"3",
+										"603525bfca21d32704442b0c",
 										"quantity",
 										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Status Shopping cart",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/shoppingcarts/603525b4ca21d32704442b0b",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"shoppingcarts",
+										"603525b4ca21d32704442b0b"
 									]
 								}
 							},
@@ -644,18 +644,18 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/shoppingcarts/4/product/2",
+									"raw": "http://localhost:3000/api/shoppingcarts/603525b4ca21d32704442b0b/product/603525bfca21d32704442b0c",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "3000",
 									"path": [
 										"api",
 										"shoppingcarts",
-										"4",
+										"603525b4ca21d32704442b0b",
 										"product",
-										"2"
+										"603525bfca21d32704442b0c"
 									]
 								}
 							},

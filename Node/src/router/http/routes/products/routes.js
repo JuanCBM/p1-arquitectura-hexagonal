@@ -16,8 +16,6 @@ function init({ productService }) {
   });
 
   router.post('/', async (req, res) => {
-    console.log('Request body: ', req.body);
-    console.log('productService', productService);
     const product = await productService.create({
       name: req.body.name,
       description: req.body.description
