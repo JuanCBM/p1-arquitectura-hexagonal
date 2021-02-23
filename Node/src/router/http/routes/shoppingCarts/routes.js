@@ -41,7 +41,7 @@ function init({ shoppingCartService }) {
     return res.send(toResponseModel(shoppingCart));
   });
 
-  router.delete('/:cart_id/products/:prod_id', async (req, res) => {
+  router.delete('/:cart_id/product/:prod_id', async (req, res) => {
     const shoppingCart = await shoppingCartService.removeProduct({
       shoppingCart: req.params.cart_id,
       product: req.params.prod_id });

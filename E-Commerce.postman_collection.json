@@ -580,7 +580,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:3000/api/shoppingcarts/603525b4ca21d32704442b0b/product/603525bfca21d32704442b0c/quantity/1",
+									"raw": "http://localhost:3000/api/shoppingcarts/603525b4ca21d32704442b0b/product/603529ae549ade45acaeacc7/quantity/1",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -591,7 +591,7 @@
 										"shoppingcarts",
 										"603525b4ca21d32704442b0b",
 										"product",
-										"603525bfca21d32704442b0c",
+										"603529ae549ade45acaeacc7",
 										"quantity",
 										"1"
 									]
@@ -644,7 +644,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:3000/api/shoppingcarts/603525b4ca21d32704442b0b/product/603525bfca21d32704442b0c",
+									"raw": "http://localhost:3000/api/shoppingcarts/603529c0549ade45acaeacc8/product/603525bfca21d32704442b0c",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -653,7 +653,7 @@
 									"path": [
 										"api",
 										"shoppingcarts",
-										"603525b4ca21d32704442b0b",
+										"603529c0549ade45acaeacc8",
 										"product",
 										"603525bfca21d32704442b0c"
 									]
