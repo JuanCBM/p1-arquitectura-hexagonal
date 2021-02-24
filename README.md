@@ -98,4 +98,10 @@ POJO para obtener información de diferentes fuentes.
 
 
 
-
+**NOTA**:
+Para mongo devolver un id string no un objectId _id:
+```
+Schema.virtual('id').get(()=>{
+	return this._id.toHexString();
+};
+````
